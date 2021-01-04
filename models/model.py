@@ -52,7 +52,7 @@ class Model:
         prediction = self.classifier(image).data.view(-1)
         probabilities = F.softmax(prediction, dim=0)
         predicted_index = torch.argmax(prediction)
-        return self.classes[predicted_index], probabilities[predicted_index]
+        return self.classes[predicted_index], probabilities[predicted_index].item()
 
     def __str__(self):
         return f"{type(self.classifier).__name__}: {self.description}"
