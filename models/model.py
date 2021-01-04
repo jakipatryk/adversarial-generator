@@ -49,7 +49,7 @@ class Model:
             raw_image = normalizer(raw_image)
         self.classifier.eval()
         image = self.preprocessing_function(raw_image)
-        prediction = self.classifier(image)
+        prediction = self.classifier(image).data.view(-1)
         probabilities = F.softmax(prediction, dim=0)
         predicted_index = torch.argmax(prediction)
         return self.classes[predicted_index], probabilities[predicted_index]
