@@ -43,12 +43,12 @@ class Model:
         Returns:
         Tuple[str, float]: 1st element is predicted class, 2nd element is prediction confidence
         """
+        image = self.preprocessing_function(raw_image)
         if not normalized:
             normalizer = T.Normalize(mean=[0.485, 0.456, 0.406], std=[
                 0.229, 0.224, 0.225])
-            raw_image = normalizer(raw_image)
+            image = normalizer(image)
         self.classifier.eval()
-        image = self.preprocessing_function(raw_image)
         prediction = self.classifier(image).data.view(-1)
         probabilities = F.softmax(prediction, dim=0)
         predicted_index = torch.argmax(prediction)
