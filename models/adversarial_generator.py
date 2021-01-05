@@ -4,7 +4,7 @@
 
 import torch
 from torchvision import transforms as T
-from .model import Model
+from model import Model
 
 
 class AdversarialGenerator():
@@ -20,7 +20,11 @@ class AdversarialGenerator():
         self.model = model
         self.description = description
 
-    def generate(self, raw_image: torch.Tensor, normalized=False) -> torch.Tensor:
+    def generate(
+            self,
+            raw_image: torch.Tensor,
+            normalized=False,
+            preprocessed=False) -> torch.Tensor:
         """
         Generates an adversarial image given some image.
 
@@ -28,11 +32,16 @@ class AdversarialGenerator():
         - raw_image (torch.Tensor): image with shape [channels, height, width]
         - normalized (bool) [optional]: is raw_image normalized,
             if not simple normalization will be performed
+        - preprocessed (bool) [optional]: is raw_image preoprocessed,
+            if not preprocessing_function will be applied
 
         Returns:
         torch.Tensor: generated adversarial image with the same shape as raw_image
         """
-        preprocessed_image = self.model.preprocessing_function(raw_image)
+        if not preprocessed:
+            preprocessed_image = self.model.preprocessing_function(raw_image)
+        else:
+            preprocessed_image = raw_image
         if not normalized:
             normalizer = T.Normalize(mean=[0.485, 0.456, 0.406], std=[
                 0.229, 0.224, 0.225])
@@ -58,3 +67,6 @@ class AdversarialGenerator():
         torch.Tensor: tensor to be added to the image to change prediction
         """
         raise NotImplementedError
+
+    def __str__(self):
+        return f"{type(self).__name__}: {self.description}"
