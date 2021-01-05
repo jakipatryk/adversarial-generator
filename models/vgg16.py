@@ -10,4 +10,4 @@ VGG16 = Model(torchvision.models.vgg16(pretrained=True),
               'in the paper "Very Deep Convolutional Networks for Large-Scale Image Recognition".' +
               ' Accepts 224x224 RGB images.',
               IMAGENET_CLASSES,
-              lambda img: T.Compose([T.Resize(256), T.CenterCrop(224)])(img[:3]).unsqueeze(0))
+              lambda img: T.Compose([T.Resize(256), T.CenterCrop(224)])(img[:3]))

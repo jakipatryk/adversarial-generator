@@ -25,13 +25,18 @@ class Model:
             classifier: Type[torch.nn.Module],
             description: str,
             classes: List[str],
-            preprocessing_function: Callable[[torch.Tensor], torch.Tensor] = lambda x: x):
+            preprocessing_function: Callable[[
+                torch.Tensor], torch.Tensor] = lambda x: x):
         self.classifier = classifier
         self.description = description
         self.classes = classes
         self.preprocessing_function = preprocessing_function
 
-    def predict(self, raw_image: torch.Tensor, normalized=False) -> Tuple[str, float]:
+    def predict(
+            self,
+            raw_image: torch.Tensor,
+            normalized=False,
+            preprocessed=False) -> Tuple[str, float]:
         """
         Classifies given image.
 
@@ -39,11 +44,16 @@ class Model:
         - raw_image (torch.Tensor): image with shape [channels, height, width] to classify
         - normalized (bool) [optional]: is raw_image normalized,
             if not simple normalization will be performed
+        - preprocessed (bool) [optional]: is raw_image preoprocessed,
+            if not preprocessing_function will be applied
 
         Returns:
         Tuple[str, float]: 1st element is predicted class, 2nd element is prediction confidence
         """
-        image = self.preprocessing_function(raw_image)
+        if not preprocessed:
+            image = self.preprocessing_function(raw_image).unsqueeze(0)
+        else:
+            image = raw_image.unsqueeze(0)
         if not normalized:
             normalizer = T.Normalize(mean=[0.485, 0.456, 0.406], std=[
                 0.229, 0.224, 0.225])

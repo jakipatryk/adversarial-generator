@@ -10,4 +10,4 @@ ALEXNET = Model(torchvision.models.alexnet(pretrained=True),
                 'in the paper "One weird trick for parallelizing convolutional neural networks".' +
                 ' Accepts 256x256 RGB images.',
                 IMAGENET_CLASSES,
-                lambda img: T.Compose([T.Resize(276), T.CenterCrop(256)])(img[:3]).unsqueeze(0))
+                lambda img: T.Compose([T.Resize(276), T.CenterCrop(256)])(img[:3]))
