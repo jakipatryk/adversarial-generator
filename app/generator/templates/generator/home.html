@@ -1,0 +1,22 @@
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="Submit" />
+</form>
+
+{% if original_prediction_class %}
+<div>
+  Original image: <img src="data:image/png;base64,{{ original_img_str }}" />
+  <p>
+    Predicted: {{original_prediction_class}}, confidence:
+    {{original_prediction_confidence}}
+  </p>
+</div>
+<div>
+  Adversarial example:
+  <img src="data:image/png;base64,{{ perturbated_img_str }}" />
+  <p>
+    Predicted: {{perturbated_prediction_class}}, confidence:
+    {{perturbated_prediction_confidence}}
+  </p>
+</div>
+{% endif %}
