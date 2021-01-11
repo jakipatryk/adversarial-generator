@@ -1,22 +1,41 @@
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %} {{ form.as_p }}
-  <input type="submit" value="Submit" />
-</form>
-
-{% if original_prediction_class %}
-<div>
-  Original image: <img src="data:image/png;base64,{{ original_img_str }}" />
-  <p>
-    Predicted: {{original_prediction_class}}, confidence:
-    {{original_prediction_confidence}}
-  </p>
+{% extends 'generator/base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg">
+      {% if model_info %}
+      <h5>About model</h5>
+      <p>{{model_info}}</p>
+      <h5>About method</h5>
+      <p>{{generator_info}}</p>
+      {% endif %}
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Generate" />
+      </form>
+    </div>
+    {% if original_prediction_class %}
+    <div class="col-lg">
+      <h4>Original image:</h4>
+      <img
+        src="data:image/png;base64,{{ original_img_str }}"
+        style="margin-bottom: 20px"
+      />
+      <p>
+        Predicted: <b>{{original_prediction_class}}</b><br />
+        Confidence: {{original_prediction_confidence|floatformat:2}}%
+      </p>
+    </div>
+    <div class="col-lg">
+      <h4>Adversarial example:</h4>
+      <img
+        src="data:image/png;base64,{{ perturbated_img_str }}"
+        style="margin-bottom: 20px"
+      />
+      <p>
+        Predicted: <b>{{perturbated_prediction_class}}</b><br />
+        Confidence: {{perturbated_prediction_confidence|floatformat:2}}%
+      </p>
+    </div>
+  </div>
 </div>
-<div>
-  Adversarial example:
-  <img src="data:image/png;base64,{{ perturbated_img_str }}" />
-  <p>
-    Predicted: {{perturbated_prediction_class}}, confidence:
-    {{perturbated_prediction_confidence}}
-  </p>
-</div>
-{% endif %}
+{% endif %} {% endblock %}
