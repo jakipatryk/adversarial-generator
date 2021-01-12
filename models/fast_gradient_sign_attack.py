@@ -5,6 +5,7 @@
 import torch
 from adversarial_generator import AdversarialGenerator
 from model import Model
+from utils import NORMALIZER, DENORMALIZER
 
 
 class FastGradientSignAttack(AdversarialGenerator):
@@ -72,11 +73,15 @@ class FastGradientSignAttack(AdversarialGenerator):
         float: small epsilon that changes prediction
         """
         left = 0.0
-        right = 1.0
+        right = 2.24
         with torch.no_grad():
             for _ in range(max_iter):
                 mid = (left + right)/2
                 perturbated_image = preprocessed_image + mid * grad_sign
+                perturbated_image = DENORMALIZER(perturbated_image)
+                perturbated_image = torch.clamp(
+                    perturbated_image, min=0, max=1)
+                perturbated_image = NORMALIZER(perturbated_image)
                 perturbated_pred = self.model.classifier(
                     perturbated_image.unsqueeze(0))
                 perturbated_pred_class_idx = torch.argmax(perturbated_pred[0])

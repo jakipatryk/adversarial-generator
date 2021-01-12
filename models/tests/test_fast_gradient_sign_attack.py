@@ -21,10 +21,13 @@ class TestFastGradientSignAttack(unittest.TestCase):
     def setUp(self):
         self.ec_1 = EpsilonClassifier(0.0000001)
         self.ec_2 = EpsilonClassifier(0.6)
+        self.ec_3 = EpsilonClassifier(10.)
         self.image = torch.zeros(3, 5, 5)
         self.model_1 = Model(self.ec_1, "desc", [
                              "class_1", "class_2", "class_3"])
         self.model_2 = Model(self.ec_2, "desc", [
+                             "class_1", "class_2", "class_3"])
+        self.model_3 = Model(self.ec_3, "desc", [
                              "class_1", "class_2", "class_3"])
 
     def test_generate_change_tensor(self):
@@ -40,13 +43,15 @@ class TestFastGradientSignAttack(unittest.TestCase):
             self.assertEqual(pred_2[0], "class_3")
 
     def test__find_epsilon(self):
-        ec = EpsilonClassifier(0.0000001)
-        model = Model(ec, "desc", ["class_1", "class_2", "class_3"])
-        fgsa = FastGradientSignAttack(model)
-        epsilon = fgsa._find_epsilon(
-            torch.zeros(3, 5, 5), torch.ones(3, 5, 5), 0)
-        self.assertEqual(epsilon, 0.00390625)
-        ec.epsilon = 0.6
-        epsilon = fgsa._find_epsilon(
-            torch.zeros(3, 5, 5), torch.ones(3, 5, 5), 0)
-        self.assertEqual(epsilon, 0.6015625)
+        fgsa_1 = FastGradientSignAttack(self.model_1)
+        epsilon_1 = fgsa_1._find_epsilon(
+            self.image, torch.ones_like(self.image), 0)
+        self.assertEqual(epsilon_1, 0.00875)
+        fgsa_2 = FastGradientSignAttack(self.model_2)
+        epsilon_2 = fgsa_2._find_epsilon(
+            self.image, torch.ones_like(self.image), 0)
+        self.assertEqual(epsilon_2, 0.60375)
+        fgsa_3 = FastGradientSignAttack(self.model_3)
+        epsilon_3 = fgsa_3._find_epsilon(torch.full_like(
+            self.image, 20.), torch.ones_like(self.image), 0)
+        self.assertEqual(epsilon_3, 2.24)
