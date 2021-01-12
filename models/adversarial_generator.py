@@ -5,6 +5,7 @@
 import torch
 from torchvision import transforms as T
 from model import Model
+from utils import NORMALIZER, DENORMALIZER
 
 
 class AdversarialGenerator():
@@ -43,13 +44,9 @@ class AdversarialGenerator():
         else:
             preprocessed_image = raw_image
         if not normalized:
-            normalizer = T.Normalize(mean=[0.485, 0.456, 0.406], std=[
-                0.229, 0.224, 0.225])
-            preprocessed_image = normalizer(preprocessed_image)
+            preprocessed_image = NORMALIZER(preprocessed_image)
         change_tensor = self.generate_change_tensor(preprocessed_image)
-        denormalizer = T.Normalize(mean=[-0.485/0.229, -0.456/0.224, -0.406/0.225], std=[
-            1/0.229, 1/0.224, 1/0.225])
-        adversatial_image = denormalizer(preprocessed_image + change_tensor)
+        adversatial_image = DENORMALIZER(preprocessed_image + change_tensor)
         adversatial_image = torch.clamp(adversatial_image, min=0, max=1)
         return adversatial_image
 
