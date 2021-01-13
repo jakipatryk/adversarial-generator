@@ -5,7 +5,7 @@
 import torch
 from adversarial_generator import AdversarialGenerator
 from model import Model
-from utils import NORMALIZER, DENORMALIZER
+from utils import clipped_renormalize
 
 
 class FastGradientSignAttack(AdversarialGenerator):
@@ -78,10 +78,7 @@ class FastGradientSignAttack(AdversarialGenerator):
             for _ in range(max_iter):
                 mid = (left + right)/2
                 perturbated_image = preprocessed_image + mid * grad_sign
-                perturbated_image = DENORMALIZER(perturbated_image)
-                perturbated_image = torch.clamp(
-                    perturbated_image, min=0, max=1)
-                perturbated_image = NORMALIZER(perturbated_image)
+                perturbated_image = clipped_renormalize(perturbated_image)
                 perturbated_pred = self.model.classifier(
                     perturbated_image.unsqueeze(0))
                 perturbated_pred_class_idx = torch.argmax(perturbated_pred[0])
