@@ -2,7 +2,7 @@
 
 A simple app generating [adversarial examples](https://openai.com/blog/adversarial-example-research/) with a few methods, for various neural network based image classifiers.
 
-![screenshot](https://i.imgur.com/VJFKpxv.png)
+![screenshot](https://i.imgur.com/ZDGIr4D.png)
 
 ## Project structure
 
