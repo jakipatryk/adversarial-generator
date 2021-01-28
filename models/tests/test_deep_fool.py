@@ -1,6 +1,8 @@
+# pylint: disable=no-member,invalid-name,missing-docstring,not-callable
+
 import unittest
-import torch
 from unittest.mock import patch
+import torch
 from .dummy_clasifier import DummyClasifier
 from ..deep_fool import DeepFool
 from ..model import Model

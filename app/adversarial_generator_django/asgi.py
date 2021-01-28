@@ -1,3 +1,5 @@
+# pylint: disable=invalid-name
+
 """
 ASGI config for adversarial_generator project.
 

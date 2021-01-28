@@ -1,11 +1,12 @@
+# pylint: disable=missing-docstring,no-name-in-module,import-error,invalid-name
+
 from django.shortcuts import render
-from generator.forms import ImageUploadForm
 from torchvision import transforms as T
 from PIL import Image
+from generator.forms import ImageUploadForm
+from generator.utils import img_to_base64
 from all_models import ALL_MODELS
 from all_generators import ALL_GENERATORS
-from fast_gradient_sign_attack import FastGradientSignAttack
-from generator.utils import img_to_base64
 
 
 def home_view(request):

@@ -10,3 +10,7 @@ The project consists of two main modules:
 
 - models - this one contains all ML-related stuff
 - app - Django application that provides UI for the generator
+
+## Run pylint
+
+`find . -type f -name "*.py" | xargs pylint `

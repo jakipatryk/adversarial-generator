@@ -1,3 +1,5 @@
+# pylint: disable=import-error
+
 """Contains VGG16 Model."""
 
 import torchvision

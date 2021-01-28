@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring,import-error
+
 from django import forms
 from all_models import ALL_MODELS
 from all_generators import ALL_GENERATORS

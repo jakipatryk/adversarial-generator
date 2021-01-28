@@ -1,3 +1,5 @@
+# pylint: disable=import-error
+
 """Contains DENSENET Model."""
 
 import torchvision

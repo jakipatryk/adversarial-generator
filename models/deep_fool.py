@@ -1,4 +1,4 @@
-# pylint: disable=no-member,invalid-name
+# pylint: disable=no-member,invalid-name,import-error,no-name-in-module,too-few-public-methods
 
 """
 Contains adversarial generator that uses DeepFool method.

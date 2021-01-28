@@ -1,4 +1,4 @@
-# pylint: disable=no-member,not-callable
+# pylint: disable=no-member,not-callable,import-error,no-name-in-module,too-few-public-methods
 
 """Contains adversarial generator that uses Fast Gradient Sign Attack method."""
 

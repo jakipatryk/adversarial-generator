@@ -1,3 +1,5 @@
+# pylint: disable=no-member,invalid-name,missing-docstring,not-callable
+
 import unittest
 import torch
 from .dummy_adversarial_generator import DummyAdversarialGenerator

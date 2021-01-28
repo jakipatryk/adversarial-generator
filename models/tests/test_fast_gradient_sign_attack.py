@@ -1,3 +1,5 @@
+# pylint: disable=no-member,invalid-name,missing-docstring,not-callable,protected-access
+
 import unittest
 from unittest.mock import patch
 import torch
@@ -13,8 +15,7 @@ class EpsilonClassifier(torch.nn.Module):
     def forward(self, x: torch.Tensor):
         if torch.sum(torch.abs(x) > self.epsilon) == 0:
             return torch.tensor([[1., 0., 0.]])
-        else:
-            return torch.tensor([[0., 0., 1.]])
+        return torch.tensor([[0., 0., 1.]])
 
 
 class TestFastGradientSignAttack(unittest.TestCase):
@@ -24,11 +25,11 @@ class TestFastGradientSignAttack(unittest.TestCase):
         self.ec_3 = EpsilonClassifier(10.)
         self.image = torch.zeros(3, 5, 5)
         self.model_1 = Model(self.ec_1, "desc", [
-                             "class_1", "class_2", "class_3"])
+            "class_1", "class_2", "class_3"])
         self.model_2 = Model(self.ec_2, "desc", [
-                             "class_1", "class_2", "class_3"])
+            "class_1", "class_2", "class_3"])
         self.model_3 = Model(self.ec_3, "desc", [
-                             "class_1", "class_2", "class_3"])
+            "class_1", "class_2", "class_3"])
 
     def test_generate_change_tensor(self):
         with patch('torch.autograd.grad') as grad:

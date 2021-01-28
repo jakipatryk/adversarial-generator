@@ -1,3 +1,5 @@
+# pylint: disable=no-member,invalid-name,missing-docstring,useless-super-delegation
+
 import torch
 from ..adversarial_generator import AdversarialGenerator
 from ..model import Model

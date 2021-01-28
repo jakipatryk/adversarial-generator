@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring,invalid-name
+
 from django.urls import path
 from .views import home_view
 

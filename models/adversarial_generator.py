@@ -1,9 +1,8 @@
-# pylint: disable=no-member
+# pylint: disable=no-member,import-error,no-name-in-module
 
 """Contains base abstract class for all adversarial generators."""
 
 import torch
-from torchvision import transforms as T
 from model import Model
 from utils import NORMALIZER, DENORMALIZER
 

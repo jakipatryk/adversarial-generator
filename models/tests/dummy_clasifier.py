@@ -1,3 +1,5 @@
+# pylint: disable=no-member,invalid-name,missing-docstring
+
 import torch
 
 
@@ -6,5 +8,5 @@ class DummyClasifier(torch.nn.Module):
         super(DummyClasifier, self).__init__()
         self.predictions = predictions
 
-    def forward(self, x: torch.Tensor):
+    def forward(self, _: torch.Tensor):
         return self.predictions
