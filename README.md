@@ -14,8 +14,11 @@ The project consists of two main modules:
 ## Run app
 
 `conda create --name adversarial-generator --file spec-file.txt`
+
 `conda activate adversarial-generator`
+
 `cd app`
+
 `python manage.py runserver`
 
 ## Run pylint
